@@ -11,12 +11,12 @@ public class ControladorPrincipal {
     @FXML private Button btnBuscarAnimalNombre;
     @FXML private TextField txtBuscarAnimalChip;
     @FXML private Button btnBuscarAnimalChip;
-    @FXML private Label lblResultadoBusquedaAnimal;
+    @FXML private TextArea lblResultadoBusquedaAnimal;
 
     // Campos y botones para búsqueda de clientes
     @FXML private TextField txtBuscarClienteNombre;
     @FXML private Button btnBuscarCliente;
-    @FXML private Label lblResultadoBusquedaCliente;
+    @FXML private TextArea lblResultadoBusquedaCliente;
 
     // Campos y botones para añadir cliente
     @FXML private TextField txtNombreCliente;
@@ -24,7 +24,7 @@ public class ControladorPrincipal {
     @FXML private TextField txtTelefonoCliente;
     @FXML private TextField txtCorreoCliente;
     @FXML private Button btnAgregarCliente;
-    @FXML private Label lblResultadoCliente;
+    @FXML private TextArea lblResultadoCliente;
 
     // Campos y botones para añadir animal
     @FXML private TextField txtNombreAnimal;
@@ -33,7 +33,7 @@ public class ControladorPrincipal {
     @FXML private TextField txtTipoAnimal;
     @FXML private TextField txtIdClienteAnimal; // Supondremos que se ingresa el ID del cliente
     @FXML private Button btnAgregarAnimal;
-    @FXML private Label lblResultadoAnimal;
+    @FXML private TextArea lblResultadoAnimal;
 
     // Instancias de los controladores de modelo
     private final ControladorCliente ctrlCliente = new ControladorCliente();
