@@ -1,6 +1,6 @@
 package org.example.gestionveterinaria.modelo;
 
-public class Animal {
+public abstract class Animal {
 
     //      ATRIBUTOS DEL MODELO
     private String numeroChip;        // Identificador único del animal

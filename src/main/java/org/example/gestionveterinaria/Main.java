@@ -1,6 +1,5 @@
 package org.example.gestionveterinaria;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,13 +12,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        // Carga el archivo FXML del login
-        Parent root = FXMLLoader.load(getClass().getResource("/vistas/VistaLogin.fxml"));
+        // Carga el archivo FXML de la vista principal
+        Parent root = FXMLLoader.load(getClass().getResource("/org/example/gestionveterinaria/VistaPrincipal.fxml"));
 
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Sistema de Gestión Veterinaria - Login");
+        primaryStage.setTitle("Sistema de Gestión Veterinaria - Principal");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false); // Opcional
+        primaryStage.setResizable(true); // Permitir redimensionar
         primaryStage.show();
     }
 
