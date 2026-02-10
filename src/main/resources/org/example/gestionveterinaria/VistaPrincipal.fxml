@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -55,7 +56,7 @@
                         <TextField fx:id="txtBuscarAnimalChip" GridPane.rowIndex="3" />
                         <Button fx:id="btnBuscarAnimalChip" mnemonicParsing="false" onAction="#handleBuscarAnimalPorChip" text="Buscar" GridPane.rowIndex="3" GridPane.columnIndex="1" />
 
-                        <Label fx:id="lblResultadoBusquedaAnimal" text="Resultado de la búsqueda de animal aparecerá aquí." wrapText="true" GridPane.rowIndex="4" GridPane.columnSpan="2" />
+                        <TextArea fx:id="lblResultadoBusquedaAnimal" text="Resultado de la búsqueda de animal aparecerá aquí." wrapText="true" prefRowCount="5" editable="false" GridPane.rowIndex="4" GridPane.columnSpan="2" />
 
                         <!-- Separador -->
                         <Separator prefWidth="200.0" GridPane.rowIndex="5" GridPane.columnSpan="3" />
@@ -65,7 +66,7 @@
                         <TextField fx:id="txtBuscarClienteNombre" GridPane.rowIndex="7" />
                         <Button fx:id="btnBuscarCliente" mnemonicParsing="false" onAction="#handleBuscarCliente" text="Buscar" GridPane.rowIndex="7" GridPane.columnIndex="1" />
 
-                        <Label fx:id="lblResultadoBusquedaCliente" text="Resultado de la búsqueda de cliente aparecerá aquí." wrapText="true" GridPane.rowIndex="8" GridPane.columnSpan="2" />
+                        <TextArea fx:id="lblResultadoBusquedaCliente" text="Resultado de la búsqueda de cliente aparecerá aquí." wrapText="true" prefRowCount="5" editable="false" GridPane.rowIndex="8" GridPane.columnSpan="2" />
 
                         <!-- Separador -->
                         <Separator prefWidth="200.0" GridPane.rowIndex="9" GridPane.columnSpan="3" />
@@ -82,7 +83,7 @@
                         <TextField fx:id="txtCorreoCliente" GridPane.rowIndex="14" GridPane.columnIndex="1" />
                         <Button fx:id="btnAgregarCliente" mnemonicParsing="false" onAction="#handleAgregarCliente" text="Agregar Cliente" GridPane.rowIndex="15" GridPane.columnSpan="2" />
 
-                        <Label fx:id="lblResultadoCliente" text="Resultado de la operación de cliente aparecerá aquí." wrapText="true" GridPane.rowIndex="16" GridPane.columnSpan="2" />
+                        <TextArea fx:id="lblResultadoCliente" text="Resultado de la operación de cliente aparecerá aquí." wrapText="true" prefRowCount="3" editable="false" GridPane.rowIndex="16" GridPane.columnSpan="2" />
 
                         <!-- Separador -->
                         <Separator prefWidth="200.0" GridPane.rowIndex="17" GridPane.columnSpan="3" />
@@ -101,7 +102,7 @@
                         <TextField fx:id="txtIdClienteAnimal" GridPane.rowIndex="23" GridPane.columnIndex="1" />
                         <Button fx:id="btnAgregarAnimal" mnemonicParsing="false" onAction="#handleAgregarAnimal" text="Agregar Animal" GridPane.rowIndex="24" GridPane.columnSpan="2" />
 
-                        <Label fx:id="lblResultadoAnimal" text="Resultado de la operación de animal aparecerá aquí." wrapText="true" GridPane.rowIndex="25" GridPane.columnSpan="2" />
+                        <TextArea fx:id="lblResultadoAnimal" text="Resultado de la operación de animal aparecerá aquí." wrapText="true" prefRowCount="3" editable="false" GridPane.rowIndex="25" GridPane.columnSpan="2" />
 
                     </children>
                     <padding>
