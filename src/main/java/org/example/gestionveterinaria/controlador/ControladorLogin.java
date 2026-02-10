@@ -1,6 +1,8 @@
 package org.example.gestionveterinaria.controlador;
 
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene; // <-- Importar Scene
 import org.example.gestionveterinaria.modelo.ConexionBD;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -10,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,22 +86,24 @@ public class ControladorLogin {
             Stage loginStage = (Stage) btnLogin.getScene().getWindow();
             loginStage.close();
 
-            // Aquí instanciarías y mostrarías la ventana principal según el rol
-            // Por ahora, simulamos con un mensaje o abrimos una ventana genérica
+            // Abrir la ventana principal según el rol
+            FXMLLoader loader;
+            Parent root;
             if ("Administrador".equals(rol)) {
-                System.out.println("Bienvenido Administrador!");
-                // Aquí llamarías a la lógica para abrir la interfaz de Admin
-                // Por ejemplo: new VistaAdmin().start(new Stage());
+                loader = new FXMLLoader(getClass().getResource("VistaAdmin.fxml"));// Asegúrate que la ruta sea correcta
+                root = loader.load();
+                Stage adminStage = new Stage();
+                adminStage.setTitle("Panel de Administración");
+                adminStage.setScene(new Scene(root)); // <-- Ahora Scene está importado
+                adminStage.setResizable(false);
+                adminStage.show();
             } else if ("Veterinario".equals(rol)) {
                 System.out.println("Bienvenido Veterinario!");
-                // Aquí llamarías a la lógica para abrir la interfaz de Veterinario
-                // Por ejemplo: new VistaVeterinario().start(new Stage());
+                // Aquí irá la lógica para abrir la interfaz de Veterinario
+                mostrarAlerta("Inicio de Sesión Exitoso", "Bienvenido, Veterinario!");
             }
 
-            // Por ahora, solo mostramos un mensaje informativo
-            mostrarAlerta("Inicio de Sesión Exitoso", "Bienvenido, " + rol + "!");
-
-        } catch (Exception e) {
+        } catch (IOException e) { // Capturar IOException por FXMLLoader.load()
             System.err.println("Error al abrir la ventana principal: " + e.getMessage());
             e.printStackTrace();
         }
