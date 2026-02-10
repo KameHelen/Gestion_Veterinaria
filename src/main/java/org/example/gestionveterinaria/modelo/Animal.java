@@ -53,8 +53,10 @@ public abstract class Animal {
 
     //     REPRESENTACIÓN TEXTO
 
+    public abstract String getTipo();
+
     @Override
     public String toString() {
-        return nombre + " (Chip: " + numeroChip + ")";
+        return nombre + " (" + getTipo() + ", Chip: " + numeroChip + ")";
     }
 }
