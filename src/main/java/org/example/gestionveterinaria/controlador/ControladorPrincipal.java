@@ -50,25 +50,34 @@ public class ControladorPrincipal {
             return;
         }
 
-        // Nota: El modelo actual no tiene un método para buscar por nombre directamente en BD.
-        // Simplemente obtenemos todos y buscamos localmente en Java. Esto no es eficiente para grandes volúmenes de datos.
-        // En un entorno real, se haría una consulta SQL con LIKE o =
-        java.util.List<Animal> todosLosAnimales = ctrlAnimal.obtenerTodosLosAnimales();
-        StringBuilder resultado = new StringBuilder("Animales encontrados con nombre '" + nombre + "':\n");
+        try {
+            java.util.List<Animal> todosLosAnimales = ctrlAnimal.obtenerTodosLosAnimales();
+            StringBuilder resultado = new StringBuilder("Animales encontrados con nombre '" + nombre + "':\n\n");
 
-        boolean encontrado = false;
-        for (Animal animal : todosLosAnimales) {
-            if (animal.getNombre().toLowerCase().contains(nombre.toLowerCase())) { // Búsqueda parcial
-                resultado.append("- ").append(animal.toString()).append("\n");
-                encontrado = true;
+            if (todosLosAnimales.isEmpty()) {
+                resultado.append("No hay animales registrados en la base de datos.");
+                lblResultadoBusquedaAnimal.setText(resultado.toString());
+                return;
             }
-        }
 
-        if (!encontrado) {
-            resultado.append("Ningún animal encontrado con ese nombre.");
-        }
+            boolean encontrado = false;
+            for (Animal animal : todosLosAnimales) {
+                if (animal != null && animal.getNombre() != null && 
+                    animal.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                    resultado.append("- ").append(animal.toString()).append("\n");
+                    encontrado = true;
+                }
+            }
 
-        lblResultadoBusquedaAnimal.setText(resultado.toString());
+            if (!encontrado) {
+                resultado.append("Ningún animal encontrado con ese nombre.");
+            }
+
+            lblResultadoBusquedaAnimal.setText(resultado.toString());
+        } catch (Exception e) {
+            lblResultadoBusquedaAnimal.setText("Error al buscar: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -79,11 +88,24 @@ public class ControladorPrincipal {
             return;
         }
 
-        Animal animal = ctrlAnimal.buscarAnimalPorChip(chip);
-        if (animal != null) {
-            lblResultadoBusquedaAnimal.setText("Animal encontrado:\n" + animal.toString());
-        } else {
-            lblResultadoBusquedaAnimal.setText("No se encontró ningún animal con el chip: " + chip);
+        try {
+            Animal animal = ctrlAnimal.buscarAnimalPorChip(chip);
+            if (animal != null) {
+                StringBuilder resultado = new StringBuilder("Animal encontrado:\n\n");
+                resultado.append("- Nombre: ").append(animal.getNombre()).append("\n");
+                resultado.append("- Chip: ").append(animal.getNumeroChip()).append("\n");
+                resultado.append("- Tipo: ").append(animal.getTipo()).append("\n");
+                resultado.append("- Fecha de Nacimiento: ").append(animal.getFechaNacimiento()).append("\n");
+                if (animal.getDueno() != null) {
+                    resultado.append("- Dueño: ").append(animal.getDueno().getNombre()).append(" ").append(animal.getDueno().getApellido());
+                }
+                lblResultadoBusquedaAnimal.setText(resultado.toString());
+            } else {
+                lblResultadoBusquedaAnimal.setText("No se encontró ningún animal con el chip: " + chip);
+            }
+        } catch (Exception e) {
+            lblResultadoBusquedaAnimal.setText("Error al buscar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -98,22 +120,37 @@ public class ControladorPrincipal {
             return;
         }
 
-        java.util.List<Cliente> todosLosClientes = ctrlCliente.obtenerTodosLosClientes();
-        StringBuilder resultado = new StringBuilder("Clientes encontrados con nombre '" + nombre + "':\n");
+        try {
+            java.util.List<Cliente> todosLosClientes = ctrlCliente.obtenerTodosLosClientes();
+            StringBuilder resultado = new StringBuilder("Clientes encontrados con nombre '" + nombre + "':\n\n");
 
-        boolean encontrado = false;
-        for (Cliente cliente : todosLosClientes) {
-            if ((cliente.getNombre() + " " + cliente.getApellidos()).toLowerCase().contains(nombre.toLowerCase())) { // Búsqueda en nombre y apellidos
-                resultado.append("- ").append(cliente.toString()).append("\n");
-                encontrado = true;
+            if (todosLosClientes.isEmpty()) {
+                resultado.append("No hay clientes registrados en la base de datos.");
+                lblResultadoBusquedaCliente.setText(resultado.toString());
+                return;
             }
-        }
 
-        if (!encontrado) {
-            resultado.append("Ningún cliente encontrado con ese nombre.");
-        }
+            boolean encontrado = false;
+            for (Cliente cliente : todosLosClientes) {
+                if (cliente != null && cliente.getNombre() != null && cliente.getApellido() != null &&
+                    (cliente.getNombre() + " " + cliente.getApellido()).toLowerCase().contains(nombre.toLowerCase())) {
+                    resultado.append("- ID: ").append(cliente.getId_cliente()).append("\n");
+                    resultado.append("  Nombre: ").append(cliente.getNombre()).append(" ").append(cliente.getApellido()).append("\n");
+                    resultado.append("  Teléfono: ").append(cliente.getTelefono() != null ? cliente.getTelefono() : "N/A").append("\n");
+                    resultado.append("  Correo: ").append(cliente.getCorreo() != null ? cliente.getCorreo() : "N/A").append("\n\n");
+                    encontrado = true;
+                }
+            }
 
-        lblResultadoBusquedaCliente.setText(resultado.toString());
+            if (!encontrado) {
+                resultado.append("Ningún cliente encontrado con ese nombre.");
+            }
+
+            lblResultadoBusquedaCliente.setText(resultado.toString());
+        } catch (Exception e) {
+            lblResultadoBusquedaCliente.setText("Error al buscar: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
@@ -134,7 +171,7 @@ public class ControladorPrincipal {
         Cliente nuevoCliente = new Cliente(nombre, apellidos, telefono, correo);
 
         if (ctrlCliente.insertarCliente(nuevoCliente)) {
-            lblResultadoCliente.setText("Cliente agregado exitosamente: " + nuevoCliente.getNombre() + " " + nuevoCliente.getApellidos());
+            lblResultadoCliente.setText("Cliente agregado exitosamente: " + nuevoCliente.getNombre() + " " + nuevoCliente.getApellido());
             // Limpiar campos
             txtNombreCliente.clear();
             txtApellidosCliente.clear();
@@ -189,7 +226,7 @@ public class ControladorPrincipal {
             lblResultadoAnimal.setText("Error: No se encontró un cliente con ID: " + idCliente);
             return;
         }
-        nuevoAnimal.setDueno(dueno); // Asignar el dueño encontrado
+        nuevoAnimal.setDueno(dueño); // Asignar el dueño encontrado
 
         if (ctrlAnimal.insertarAnimal(nuevoAnimal)) {
             lblResultadoAnimal.setText("Animal agregado exitosamente: " + nuevoAnimal.getNombre() + " (" + nuevoAnimal.getTipo() + ") con chip: " + chip);

@@ -5,5 +5,8 @@ module org.example.gestionveterinaria {
 
 
     opens org.example.gestionveterinaria to javafx.fxml;
+    opens org.example.gestionveterinaria.modelo to javafx.base;
     exports org.example.gestionveterinaria;
+    exports org.example.gestionveterinaria.controlador to javafx.fxml;
+    opens org.example.gestionveterinaria.controlador to javafx.fxml;
 }
