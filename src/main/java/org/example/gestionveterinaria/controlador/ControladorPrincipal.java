@@ -189,7 +189,7 @@ public class ControladorPrincipal {
             lblResultadoAnimal.setText("Error: No se encontró un cliente con ID: " + idCliente);
             return;
         }
-        nuevoAnimal.setDueño(dueño); // Asignar el dueño encontrado
+        nuevoAnimal.setDueno(dueno); // Asignar el dueño encontrado
 
         if (ctrlAnimal.insertarAnimal(nuevoAnimal)) {
             lblResultadoAnimal.setText("Animal agregado exitosamente: " + nuevoAnimal.getNombre() + " (" + nuevoAnimal.getTipo() + ") con chip: " + chip);
