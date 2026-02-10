@@ -6,7 +6,7 @@ public class Animal {
     private String numeroChip;        // Identificador único del animal
     private String nombre;            // Nombre del animal
     private String fechaNacimiento;   // Fecha de nacimiento (String o LocalDate)
-    private Cliente dueño;            // Relación: un animal pertenece a un cliente
+    private Cliente dueno;            // Relación: un animal pertenece a un cliente
 
 
     //   CONSTRUCTOR COMPLETO
@@ -15,7 +15,7 @@ public class Animal {
         this.numeroChip = numeroChip;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
-        this.dueño = dueno;
+        this.dueno = dueno;
     }
 
     //         GETTERS / SETTERS
@@ -44,11 +44,11 @@ public class Animal {
     }
 
     public Cliente getDueno() {
-        return dueño;
+        return dueno;
     }
 
     public void setDueno(Cliente dueno) {
-        this.dueño = dueno;
+        this.dueno = dueno;
     }
 
     //     REPRESENTACIÓN TEXTO
