@@ -1,0 +1,76 @@
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS gestionveterinaria_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+-- Usar la base de datos recién creada
+USE gestionveterinaria_db;
+
+-- Tabla Cliente
+CREATE TABLE Cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(150) NOT NULL,
+    telefono VARCHAR(20),
+    correo VARCHAR(150)
+);
+
+-- Tabla Animal (única tabla para todos los tipos, usando discriminador)
+CREATE TABLE Animal (
+    numero_chip VARCHAR(50) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    fecha_nacimiento DATE,
+    id_cliente INT,
+    tipo_animal ENUM('Perro', 'Gato', 'Exotico') NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente)
+    ON DELETE SET NULL -- Si se elimina un cliente, el dueño del animal se pone a NULL
+);
+
+-- Tabla Usuario (para Administrador y Veterinarios)
+CREATE TABLE Usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(150) NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL, -- Guardar contraseñas hasheadas es crucial
+    rol ENUM('Administrador', 'Veterinario') NOT NULL
+);
+
+-- Tabla Expediente
+CREATE TABLE Expediente (
+    id_expediente INT AUTO_INCREMENT PRIMARY KEY,
+    numero_chip_animal VARCHAR(50),
+    observaciones_globales TEXT,
+    FOREIGN KEY (numero_chip_animal) REFERENCES Animal(numero_chip)
+    ON DELETE CASCADE -- Si se elimina un animal, su expediente también
+);
+
+-- Tabla Cita_Medica
+CREATE TABLE Cita_Medica (
+    id_cita INT AUTO_INCREMENT PRIMARY KEY,
+    numero_chip_animal VARCHAR(50),
+    id_usuario_veterinario INT,
+    fecha DATE NOT NULL,
+    hora_inicio TIME NOT NULL, -- Ej: '09:00', '09:30'
+    FOREIGN KEY (numero_chip_animal) REFERENCES Animal(numero_chip)
+    ON DELETE CASCADE, -- Si se elimina un animal, sus citas también
+    FOREIGN KEY (id_usuario_veterinario) REFERENCES Usuario(id_usuario)
+    ON DELETE SET NULL -- Si se elimina un veterinario, la cita queda sin asignar
+);
+
+-- Tabla Observacion_Cita (relaciona observaciones con citas específicas)
+CREATE TABLE Observacion_Cita (
+    id_observacion INT AUTO_INCREMENT PRIMARY KEY,
+    id_cita INT NOT NULL,
+    detalle_observacion TEXT,
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP, -- Fecha/Hora del registro
+    FOREIGN KEY (id_cita) REFERENCES Cita_Medica(id_cita)
+    ON DELETE CASCADE -- Si se elimina una cita, sus observaciones también
+);
+
+-- Insertar un administrador de ejemplo (contraseña: admin123, hasheada con BCrypt)
+INSERT INTO Usuario (nombre, apellido, username, password_hash, rol) VALUES
+('Admin', 'General', 'admin', '$2a$10$vdtBq3XkKxZrY8.YLdLmXuRzQF9.XwP7WY5.yLdLmXuRzQF9.XwP7WY5', 'Administrador'); -- Contraseña hasheada de 'admin123'
+
+-- Insertar dos veterinarios de ejemplo
+INSERT INTO Usuario (nombre, apellido, username, password_hash, rol) VALUES
+('Carlos', 'López', 'vet_carlos', '$2a$10$vdtBq3XkKxZrY8.YLdLmXuRzQF9.XwP7WY5.yLdLmXuRzQF9.XwP7WY5', 'Veterinario'), -- Contraseña hasheada de 'vet123'
+('María', 'García', 'vet_maria', '$2a$10$vdtBq3XkKxZrY8.YLdLmXuRzQF9.XwP7WY5.yLdLmXuRzQF9.XwP7WY5', 'Veterinario'); -- Contraseña hasheada de 'vet123'
